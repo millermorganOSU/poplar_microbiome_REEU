@@ -1,0 +1,4 @@
+data/reads/*
+data/n_filtered_reads/*
+data/cut_reads/*
+outputs/filtered_outputs/*

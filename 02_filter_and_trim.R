@@ -11,28 +11,43 @@ library(Biostrings); packageVersion("Biostrings")
 library(glue); packageVersion("glue")
 
 # Set WD for or local machine
-setwd('~/LeBoldus/local_git/poplar_microbiome')
+setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
 
 # Define path for data and outputs
 data_path <- "data/reads"
-output_path <- "outputs/filtered_outputs"
+outputs_path <- "outputs"
+filtered_path <- "outputs/filtered_outputs"
 n_path <- "data/n_filtered_reads"
 cut_path <- "data/cut_reads"
 
 # Create directories if they do not all ready exist
 
-## final filtered outputs
-if (!dir.exists(output_path)) {
-  dir.create(output_path)
+## outputs dir
+if (!dir.exists(outputs_path)) {
+  dir.create(outputs_path)
 }else{
   glue("Output directory {output_path} allready exists")
 }
 
-## N filtered outputs
+## n filtered reads
 if (!dir.exists(n_path)) {
   dir.create(n_path)
 }else{
   glue("Output directory {n_path} allready exists")
+}
+
+## cut reads
+if (!dir.exists(cut_path)) {
+  dir.create(cut_path)
+}else{
+  glue("Output directory {cut_path} allready exists")
+}
+
+## final filtered outputs
+if (!dir.exists(filtered_path)) {
+  dir.create(filtered_path)
+}else{
+  glue("Output directory {filtered_path} allready exists")
 }
 
 # Subset and sort forward and reverse reads
@@ -71,7 +86,9 @@ REV.orients
 # Pre-filter out Ns so that primer sequences can be mapped effectively
 fnFs_filtN <- file.path(n_path, basename(fnFs))
 fnRs_filtN <- file.path(n_path, basename(fnRs))
-filterAndTrim(fnFs, fnFs_filtN, fnRs, fnRs_filtN, maxN = 0, multithread = TRUE)
+nout <- filterAndTrim(fnFs, fnFs_filtN, fnRs, fnRs_filtN, maxN = 0, multithread = TRUE)
+
+nout
 
 # Define function to count number of reads containing primer sequence
 primerHits <- function(primer, fn) {
@@ -90,8 +107,8 @@ rbind(FWD.ForwardReads = sapply(FWD.orients, primerHits, fn = fnFs_filtN[[33]]),
 ## only RCs found indicating that forward primers were allready removed but readthrough errors still present
 
 # Create file names for filtered output files
-filtFs <- file.path(output_path, paste0(sample_names, "_F_filt.fastq.gz"))
-filtRs <- file.path(output_path, paste0(sample_names, "_R_filt.fastq.gz"))
+filtFs <- file.path(filtered_path, paste0(sample_names, ".R1.filt.fastq.gz"))
+filtRs <- file.path(filtered_path, paste0(sample_names, ".R2.filt.fastq.gz"))
 
 # Create file names for cut files
 fnFs_cut <- file.path(cut_path, basename(fnFs))
@@ -132,16 +149,18 @@ for (i in sample_numbers) {
 # Filter and trim
 ?filterAndTrim()
 
-# Max N = zero shouldn't matter (we allread filtered out Ns)
+# Max N = zero shouldn't matter (we allready filtered out Ns)
 # Max EE = maximum allowed errors
 # TruncQ = minimum quality allowed (sequences that dip to 28 get cut)
 # minLength = sequences shorter than 90 are filtered out
 
-out <- filterAndTrim(fnFs_cut, filtFs, fnRs_cut, filtRs, maxN=0, 
+fout <- filterAndTrim(fnFs_cut, filtFs, fnRs_cut, filtRs, maxN=0, 
                      maxEE=c(2,2), truncQ=28, compress=TRUE, multithread=TRUE,
                      minLen=90)
 
-#some files completely filtered out (2 samples, 4 files)
+fout
+
+#some files completely filtered out (2 samples, 4 files), started with allmost no sequences
 #myco.04.12.a.R1.fq.gz        1         0
 #myco.03.12.d.R1.fq.gz        5         0
 #myco.04.12.a.R2.fq.gz        1         0 (?)
