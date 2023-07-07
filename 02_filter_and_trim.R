@@ -16,7 +16,7 @@ setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
 # Define path for data and outputs
 data_path <- "data/reads"
 outputs_path <- "outputs"
-filtered_path <- "outputs/filtered_outputs"
+filtered_path <- "data/filtered_outputs"
 n_path <- "data/n_filtered_reads"
 cut_path <- "data/cut_reads"
 
@@ -26,7 +26,7 @@ cut_path <- "data/cut_reads"
 if (!dir.exists(outputs_path)) {
   dir.create(outputs_path)
 }else{
-  glue("Output directory {output_path} allready exists")
+  glue("Output directory {outputs_path} allready exists")
 }
 
 ## n filtered reads
@@ -43,7 +43,7 @@ if (!dir.exists(cut_path)) {
   glue("Output directory {cut_path} allready exists")
 }
 
-## final filtered outputs
+## filtered outputs
 if (!dir.exists(filtered_path)) {
   dir.create(filtered_path)
 }else{
@@ -167,15 +167,14 @@ fout
 #myco.03.12.d.R2.fq.gz        5         0 (?)
 #reverse reads were also discarded, at least their files do not appear in the output directory
 
-# Explore quality plots and reads.out
-ten_out
+# Explore quality plots
 plotQualityProfile(fnRs_cut[53])
 plotQualityProfile(filtRs[53])
 
 # Rename files so that missing files don't mess with the error algorithm 
-post_filter_fnFs <-sort(list.files(output_path, pattern="_F_filt.fastq.gz$", full.names = TRUE))
-post_filter_fnRs <-sort(list.files(output_path, pattern="_R_filt.fastq.gz$", full.names = TRUE))
-post_filter_sample_names <- sapply(strsplit(basename(post_filter_fnFs), ".fastq.gz$"), `[`, 1)
+post_filter_fnFs <-sort(list.files(filtered_path, pattern=".R1.filt.fastq.gz$", full.names = TRUE))
+post_filter_fnRs <-sort(list.files(filtered_path, pattern=".R2.filt.fastq.gz$", full.names = TRUE))
+post_filter_sample_names <- sapply(strsplit(basename(post_filter_fnFs), ".R[1-2].filt.fastq.gz$"), `[`, 1)
 
 # Filter out files not present in new file list
 "outputs/filtered_outputs/myco.04.12.a_F_filt.fastq.gz" %in% post_filter_fnFs
@@ -195,7 +194,7 @@ plotErrors(errR, nominalQ = TRUE)
 derepFs <- derepFastq(post_filter_fnFs, verbose=TRUE)
 derepRs <- derepFastq(post_filter_fnRs, verbose=TRUE)
 
-# Name the derep-class objects by the sample names
+# Name the derep-class objects by the sample names rather than entire file name
 names(derepFs) <- post_filter_sample_names
 names(derepRs) <- post_filter_sample_names
 
@@ -203,5 +202,32 @@ names(derepRs) <- post_filter_sample_names
 dadaFs <- dada(derepFs, err=errF, multithread=TRUE)
 dadaRs <- dada(derepRs, err=errR, multithread=TRUE)
 
-dadaFs[[100]]
-dadaRs[[1]]
+# Merging paired-end (FW and reverse) sequences 
+
+##objects are a list of dfs for each sample with sequence and abundance
+mergers <- mergePairs(dadaFs, derepFs, dadaRs, derepRs, verbose=TRUE)
+
+# Make sequence table, a single matrix with samples as rows and ASVs as columns
+seqtab <- makeSequenceTable(mergers)
+
+# 526 samples made it through the filter and 1074 ASVs were detected
+dim(seqtab)
+
+# Wide range of seq length distribution, spikes at 361bp
+table(nchar(getSequences(seqtab)))
+
+# Remove chimeras
+seqtab.nochim <- removeBimeraDenovo(seqtab, method="consensus", multithread=TRUE, verbose=TRUE)
+
+# Stats and Distribution
+dim(seqtab.nochim)
+sum(seqtab.nochim)/sum(seqtab)
+table(nchar(getSequences(seqtab.nochim)))
+
+getN <- function(x) sum(getUniques(x))
+track <- cbind(nout, fout, sapply(dadaFs, getN), sapply(dadaRs, getN), sapply(mergers, getN), rowSums(seqtab.nochim))
+# If processing a single sample, remove the sapply calls: e.g. replace sapply(dadaFs, getN) with getN(dadaFs)
+colnames(track) <- c("raw", "nfilt","input", "filtered", "denoisedF", "denoisedR", "merged", "nonchim")
+rownames(track) <- sample_names
+head(track)
+class(track)
