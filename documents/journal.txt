@@ -1,0 +1,28 @@
+Monday July 10th, 2023
+
+Did:
+Polished both Q20 and Q28 scripts
+Produced figures and stats for both filtering options
+Tidied local repository
+Created local backups for scripts
+
+Do:
+Commit and push
+Find out how to safely remove read files from git hub
+Consolidate literature
+Update fastQC scripts (?) fastQC for both filter Q options (?)
+Download unite database
+Assign taxonomy to ASVs
+ITS4 direction - possibly check using R script
+
+Tuesday July 11th, 2023
+
+Did:
+Got stuck on the computation for taxonomy assignment (10+ hours)
+
+Do:
+Create clean R workspace to speed up taxonomy assignment
+Commit and push without raw data
+
+Wednesday July 12th, 2023
+

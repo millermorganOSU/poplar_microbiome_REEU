@@ -2,6 +2,11 @@ data/reads/*
 data/n_filtered_reads/*
 data/cut_reads/*
 data/filtered_outputs/*
+data/filtered_outputs_Q20/*
+data/sample_diseasescores.xlsx
+data/wood_meta2.csv
 .RData
 .Rhistory
 .DS_Store
+R/*
+UNITE/*
