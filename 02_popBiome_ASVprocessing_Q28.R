@@ -292,6 +292,9 @@ table(nchar(getSequences(seqtab.nochim)))
 seqtab.nochim.df.28 <- as.data.frame(seqtab.nochim)
 write.csv(seqtab.nochim.df.28, "outputs/Q28/SequenceTableQ28.csv", row.names=TRUE)
 
+# Save sequence table as Rdata
+save(seqtab.nochim, file = "outputs/Q28/sequenceMATRIX_Q28.RData")
+
 # Tracking table
 options(max.print=100000)
 
@@ -335,9 +338,3 @@ track_plot <- ggplot(track_df_melt, aes(x=variable, y=value)) +
 jpeg(filename="outputs/Q28/Tracking_Q28.jpeg", width = 8, height = 4, units = 'in', res = 300)
 track_plot
 dev.off()
-
-##### ASSIGN TAXONOMY
-
-# Define UNITE reference file path
-unite.ref <- "UNITE/sh_general_release_29.11.2022/sh_general_release_dynamic_29.11.2022.fasta"
-taxa <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE)

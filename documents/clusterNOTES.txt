@@ -1,0 +1,52 @@
+# ssh to cgrb
+ssh -p732 millemo2@shell.cgrb.oregonstate.edu
+
+Files required:
+
+# General Fasta Reference file (UNITE)
+/Users/morganmiller/LeBoldus/local_git/poplar_microbiome_REEU/UNITE/sh_general_release_29.11.2022/sh_general_release_dynamic_29.11.2022.fasta
+
+# Both R scripts (do I even need scripts? once packages installed it is just a single command)
+/Users/morganmiller/LeBoldus/local_git/poplar_microbiome_REEU/Tax_Q28.R
+/Users/morganmiller/LeBoldus/local_git/poplar_microbiome_REEU/Tax_Q28.R
+
+# Both R environments (even easier is to just find way to import matrix into cluster environment)
+/Users/morganmiller/LeBoldus/local_git/poplar_microbiome_REEU/R/Tax_env_Q28.RData
+/Users/morganmiller/LeBoldus/local_git/poplar_microbiome_REEU/R/Tax_env_Q20.RData
+
+# Packages Required (R already installed)
+> library(dada2); packageVersion("dada2")
+
+# Command
+> taxa.28 <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE, verbose = TRUE)
+
+# Sitting on teaching system or pc:
+#  use sftp to transfer files to cgrb
+sftp -P 732 username@files.cgrb.oregonstate.edu
+>put myfile.txt
+>quit
+
+# Sitting on teaching system or pc:
+#  use sftp to transfer files from cgrb
+sftp -P 732 username@files.cgrb.oregonstate.edu
+>cd disk/osu/Classes_Teaching/MCB576_Sp19/ICLS_Course_Folders_on_ACTF/icls_s19_admin/data
+>get myfile.txt
+>quit
+
+# Create a gzipped tar 'archive' file to transfer to another computer
+tar -czf ./my_lessons.tgz ./my_lessons
+
+# gunzip and untar a tgz archive file on the command line
+tar -xzf my_lessons.tgz
+
+# Alternatively, can just create a zip archive on the command line
+zip -r usda_ag_2022_lessons.zip usda_ag_2022_lessons
+
+# To unzip the archive
+unzip usda_ag_2022_lessons.zip
+
+# CQLS research account request form:
+#  https://shell.cqls.oregonstate.edu/access/
+#
+# Fill out form if you don't yet have a CQLS account and your advisor asks you to sign up for one;
+#   after you fill out the form, your advisor will be asked to confirm that the account request is legitimate.

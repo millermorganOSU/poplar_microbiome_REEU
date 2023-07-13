@@ -8,7 +8,7 @@ Created local backups for scripts
 
 Do:
 Commit and push
-Find out how to safely remove read files from git hub
+Find out how to safely remove read files from github
 Consolidate literature
 Update fastQC scripts (?) fastQC for both filter Q options (?)
 Download unite database
@@ -26,3 +26,30 @@ Commit and push without raw data
 
 Wednesday July 12th, 2023
 
+Did:
+Committed and pushed but raw data remains on gitHub
+Tested ITS4 direction with new script
+
+Do:
+Clean up github repository
+Work on README report
+Work on Thesis Stage 2 tasks
+Organize and review literature
+Revise scripts to show correct primer orientation
+create Q20 tax environment
+
+Thursday, July 13th, 2023
+
+Did:
+Manually cleaned out repository
+Drafted up sections of the README report
+Organized and reviewed literature
+Created Q20 tax environment and modified tax scripts
+Committed and pushed
+
+Do:
+Finalize README report
+Work on Thesis Stage 2 tasks
+Connect with Ricardo's machine to perform taxonomy
+Ask about primer choice
+Ask how to load matrix remotely
