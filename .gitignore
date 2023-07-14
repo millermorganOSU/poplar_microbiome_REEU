@@ -7,8 +7,10 @@ data/sample_diseasescores.xlsx
 data/wood_meta2.csv
 .RData
 .Rhistory
+**/.DS_Store
 .DS_Store
 R/*
 UNITE/*
 outputs/Q20/SequenceTableQ20.csv
 outputs/Q28/SequenceTableQ28.csv
+documents/OUTvsASV.mp4
