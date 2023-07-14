@@ -4,6 +4,9 @@
 # -- Dimensions 527 samples by 1494 ASVs
 ## This is how you know you have the correct matrix loaded
 
+dim(seqtab.nochim)
+save(seqtab.nochim, file = "outputs/Q20/SeqTabQ20.RData")
+
 # Import packages
 library(dada2); packageVersion("dada2")
 
@@ -14,5 +17,5 @@ setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
 unite.ref <- "UNITE/sh_general_release_29.11.2022/sh_general_release_dynamic_29.11.2022.fasta"
 
 #Assign Taxonomy
-taxa.28 <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE, verbose = TRUE)
+taxa.20 <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE, verbose = TRUE)
 

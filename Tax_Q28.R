@@ -4,6 +4,9 @@
 # -- Dimensions 526 samples by 929 ASVs
 ## This is how you know you have the correct matrix loaded
 
+dim(seqtab.nochim)
+save(seqtab.nochim, file = "outputs/Q28/SeqTabQ28.RData")
+
 # Import packages
 library(dada2); packageVersion("dada2")
 

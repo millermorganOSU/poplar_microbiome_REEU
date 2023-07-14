@@ -54,3 +54,13 @@ Connect with Ricardo's machine to perform taxonomy
 Ask about primer choice
 Ask how to load matrix remotely
 CLEAN GIT BY TEMP REMOVING SENSITIVE FILES AND FORCE PUSHING
+
+Friday, July 14th, 2023
+
+Did:
+Cleaned git by removing sensitive/unwanted files from 'cached'
+Connected to Ricardo's machine for taxonomy assignment
+Initial subsetting of taxonomy data
+Continued development of README report
+
+
