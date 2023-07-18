@@ -1,0 +1,15 @@
+> dim(seqtab)[1] 520 618
+
+520 samples
+618 total unique ASVs
+
+Identified 5 bimeras out of 618 input sequences.
+
+> dim(seqtab.nochim)[1] 520 613
+
+520 samples
+613 total unique non-chiral ASVs
+
+Frequency of Chimeric Sequences
+
+> sum(seqtab.nochim)/sum(seqtab)[1] 0.9996984

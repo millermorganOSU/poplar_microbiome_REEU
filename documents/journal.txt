@@ -77,4 +77,19 @@ Work on Thesis Stage 2 tasks
 Prepare for Pod meeting Wed 2-4
 Create bash script for genome reference
 
+Tuesday, July 18th, 2023
+
+Did:
+Created bash scripts for genome reference
+Ran into issues with zero length sequences after alignment
+Removed samples that had no fungal ASVs (zero bytes)
+Duplicated and revised R scripts for new pipeline
+Produced sequence table with no host sequences
+Negotiated with git
+
+Do:
+Reassign taxonomy with ssh
+Work on Thesis Stage 2 tasks
+Prepare for Pod meeting Wed 2-4
+
 
