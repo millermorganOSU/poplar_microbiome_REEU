@@ -8,7 +8,7 @@ Created local backups for scripts
 
 Do:
 Commit and push
-Find out how to safely remove read files from github
+Find out how to safely remove read files from gitHub
 Consolidate literature
 Update fastQC scripts (?) fastQC for both filter Q options (?)
 Download unite database
@@ -62,5 +62,19 @@ Cleaned git by removing sensitive/unwanted files from 'cached'
 Connected to Ricardo's machine for taxonomy assignment
 Initial subsetting of taxonomy data
 Continued development of README report
+
+Do:
+Work on Thesis Stage 2 tasks
+
+Monday, July 17th, 2023
+
+Did:
+Explored representing data with Phyloseq
+Indexed Ptrichocarpa genome with bowtie2
+
+Do:
+Work on Thesis Stage 2 tasks
+Prepare for Pod meeting Wed 2-4
+Create bash script for genome reference
 
 

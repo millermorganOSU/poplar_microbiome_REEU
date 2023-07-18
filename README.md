@@ -42,7 +42,7 @@ In a perfect world, every ITS region of the DNA fragments present in the origina
 
 Clearly, the primers used for amplification considerably contribute to the potential for PCR bias and error. Careful consideration of primer strengths and challenges is critical for minimizing amplification error prior to sequencing. For this study, ITS3_KY01 (forward) and ITS4 (reverse) were used to amplify the ITS2 region of the structural Neucular Ribsomal DNA (nrDNA).
 
-[![Map of common ITS primers (Toju et al. 2012)](images/Toju 2012 ITS Primer Map.png)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3395698/)
+[![Map of common ITS primers (Toju et al. 2012)](images/Toju%202012%20ITS%20Primer%20Map.png)](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3395698/)
 
 ## **ASVs and OTUs**
 
