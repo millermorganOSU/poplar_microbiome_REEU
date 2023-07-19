@@ -91,5 +91,20 @@ Do:
 Reassign taxonomy with ssh
 Work on Thesis Stage 2 tasks
 Prepare for Pod meeting Wed 2-4
+Work on README (pictures not appearing)
+
+Wednesday, July 19th, 2023
+
+Did:
+Reassign taxonomy with ssh
+Presented progress at POD meeting
+Subsetted nophy ASVs -> exported as .fasta
+Worked on README report
+
+Do:
+Figure out how to align/group nophy.ASVs
+Work on Thesis Stage 2 tasks
+Clean up scripts
+
 
 
