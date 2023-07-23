@@ -106,5 +106,36 @@ Figure out how to align/group nophy.ASVs
 Work on Thesis Stage 2 tasks
 Clean up scripts
 
+Thursday, July 20th, 2023
+
+Did:
+Separated out likely poplar ASVs with sorted crustal-omega output
+Added Ptrichocarpa to UNITE database
+Reassigned taxonomy
+
+Do:
+Clean up clutter and commit and push
+Subset and blast taxa that remain unassigned
+Work on Thesis Stage 2 tasks
+
+Friday, July 21st, 2023
+
+Did:
+Installed Blast+ with brew
+Blasted still unassigned ASVs remotely
+
+Do:
+Clean and fill taxa table
+Work on Thesis Stage 2 tasks
+Commit and push
+
+Sunday, July 23rd, 2023
+
+Did:
+Cleaned and filled taxa table (all assigned)
+Committed and pushed
+
+Do:
+Work on Thesis Stage 2 tasks
 
 

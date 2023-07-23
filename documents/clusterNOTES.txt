@@ -1,33 +1,31 @@
-# ssh to cgrb
-ssh -p732 millemo2@shell.cgrb.oregonstate.edu
+# ssh to cqls
+ssh -p732 millemo2@shell.cqls.oregonstate.edu
 
-Cluster navigation:
+# ssh to other ip
+ssh name@<ip>
+
+# cluster navigation:
 
 SGE_Avail - Show CPU and RAM in use/free
 qrsh -q bpp@anduin change to BPP anduin
 
-Secure file transfer:
+# secure file transfer:
 
 sftp @<IP.>
 l... for local command (lpwd, lcd, lls)
 get <file to get>
 push <file to push>
 
-# Command for taxa assignment on Ricardo's machine
-> taxa <- assignTaxonomy(seqtab.nochim, unite.ref, multithread = TRUE, tryRC = TRUE, verbose = TRUE)
+# clustal-o for alignment:
 
+in clustal directory as clustal-o.sh -  clusteres sequences by aligning them with each other
 
-Cluster navigation:
-SGE_Avail - Show CPU and RAM in use/free
-qrsh -q bpp@anduin change to BPP anduin
+help:
+$./clustal-o.sh --help
 
-
-# Sitting on teaching system or pc:
-#  use sftp to transfer files from cgrb
-sftp -P 732 username@files.cgrb.oregonstate.edu
->cd disk/osu/Classes_Teaching/MCB576_Sp19/ICLS_Course_Folders_on_ACTF/icls_s19_admin/data
->get myfile.txt
->quit
+basic useage:
+$ ./clustal-o -i my-in-seqs.fa -o my-out-seqs.fa -v
+$ ./clustal-o.sh -i ../outputs/nophy_ASVs.fasta -o ../outputs/clust_nophy.fasta -v --output-order=tree-order
 
 # Create a gzipped tar 'archive' file to transfer to another computer
 tar -czf ./my_lessons.tgz ./my_lessons
@@ -42,7 +40,7 @@ zip -r usda_ag_2022_lessons.zip usda_ag_2022_lessons
 unzip usda_ag_2022_lessons.zip
 
 # CQLS research account request form:
-#  https://shell.cqls.oregonstate.edu/access/
-#
+# https://shell.cqls.oregonstate.edu/access/
 # Fill out form if you don't yet have a CQLS account and your advisor asks you to sign up for one;
-#   after you fill out the form, your advisor will be asked to confirm that the account request is legitimate.
+# after you fill out the form, your advisor will be asked to confirm that the account request is
+# legitimate.

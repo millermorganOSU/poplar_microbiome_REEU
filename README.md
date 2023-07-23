@@ -112,7 +112,7 @@ After running cut adapt from an R script (using `system2` command), all orientat
 
 To ensure that the fungal endophyte communities in our samples are accurately characterized, we must filter and trim our sequences to only include high quality base-calls and remove erroneous sequences that are too short to be a correctly amplified ITS2 sequence. For this we use DADA2's `filterAndTrim()` command again.
 
-``` R
+``` r
 fout <- filterAndTrim(fnFs_cut, filtFs, fnRs_cut, filtRs, maxN=0, 
                     maxEE=c(2,2), truncQ=28, compress=TRUE, multithread=TRUE,
                     minLen=90)
@@ -142,7 +142,7 @@ For this project, two shell scripts: `align.sh` and `control.sh` in the `genome`
 
 DADA2 uses an algorithm to create a unique error model for the input dataset. This error model is important for the de-noising process so that the program can confidently distinguish sequences resulting from error from those that represent the biological reality of our sample.
 
-``` R
+``` r
 errF <- learnErrors(post_filter_fnFs, multithread=TRUE)
 errR <- learnErrors(post_filter_fnRs, multithread=TRUE)
 ```
