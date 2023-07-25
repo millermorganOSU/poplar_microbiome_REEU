@@ -8,6 +8,7 @@ library(reshape2); packageVersion("reshape2")
 library(seqinr); packageVersion("seqinr")
 library(tidyverse)
 library(glue)
+library(vegan)
 
 # Set WD for or local machine
 setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
@@ -20,7 +21,7 @@ load("R/SeqTab_nh.RData")
 
 # Load metadata
 disease.scores <- read_xlsx("data/sample_diseasescores.xlsx")
-wood.meta <- read.csv("data/wood_meta2.csv")
+wood.meta <- read.csv("data/wood_meta2.csv", row.names = 1)
 
 # Some ASVs were not assigned beyond the Fungi Kingdom
 # -indicating that they might not be Fungi at all
@@ -297,7 +298,7 @@ taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==566,] = c("k__Plantae",
                                                          "s__Trichocarpa",
                                                          566,
                                                          "OX637686.1")
-taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==570,] = c("k__Bacteria_kin_Incertae_sedis", 
+taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==570,] = c("k__Bacteria", 
                                                          "p__Bacteria_phy_Incertae_sedis",
                                                          "c__Bacteria_cls_Incertae_sedis",
                                                          "o__Bacteria_ord_Incertae_sedis",
@@ -324,7 +325,6 @@ taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==584,] = c("k__Viridiplantae",
                                                          "s__Hibiscus_tridactylites",
                                                          584,
                                                          "OY288291.1")
-
 taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==301,] = c("k__Bacteria", 
                                                          "p__Pseudomonadota",
                                                          "c__Gammaproteobacteria",
@@ -334,7 +334,6 @@ taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==301,] = c("k__Bacteria",
                                                          "s__Brenneria_salicis",
                                                          301,
                                                          "WP_113866948.1")
-
 taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==365,] = c("k__Bacteria", 
                                                          "p__Pseudomonadota",
                                                          "c__Gammaproteobacteria",
@@ -345,6 +344,7 @@ taxa.ptri.nophy.test[taxa.ptri.nophy.test[,8]==365,] = c("k__Bacteria",
                                                          365,
                                                          "WP_113866948.1")
 
+# Manual commands for workflow
 
 blasted.index
 working <- blasted[blasted[,1]=="584",]
@@ -359,7 +359,7 @@ dim(taxa.ptri.df)
 addphy.df <- as.data.frame(taxa.ptri.nophy.test)
 dim(addphy.df)
 
-taxa.V1 <- rows_patch(taxa.ptri.df, addphy.df, by = "i")
+taxa.V1 <- rows_update(taxa.ptri.df, addphy.df, by = "i")
 
 # Separate with Phylum
 V1.phy <- taxa.V1[!is.na(taxa.V1[,2]),]
@@ -373,7 +373,7 @@ wNA <- taxa.V1[is.na(taxa.V1[,7]),]
 wNA.BU <- wNA
 iNA <- wNA[,8]
 
-# Filling loop
+# Filling loop #####
 
 for (i in 1:nrow(wNA)) { # loop repeated for every row without species assignment
   if (is.na(wNA[i,2])) { # if row i phy. is empty, don't worry about it
@@ -507,7 +507,12 @@ for (i in 1:nrow(wNA)) { # loop repeated for every row without species assignmen
 }
 }
 
+### Create matrix with all assigned #####
 taxa.V2 <- rows_patch(taxa.V1, wNA, by = "i")
+#save(taxa.V2, file = "R/FilledTaxa.RData")
+#load("R/FilledTaxa.RData")
+
+### Check to make sure all ASVs assigned #####
 
 # Separate with kingdom
 V2.kng <- taxa.V2[!is.na(taxa.V2[,1]),]
@@ -565,4 +570,4 @@ dim(V2.sp)
 V2.nosp<- taxa.V2[is.na(taxa.V2[,7]),]
 dim(V2.nosp)
 
-# All assigned!
+### All assigned!
