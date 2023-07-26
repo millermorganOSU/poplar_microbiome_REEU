@@ -152,7 +152,7 @@ Do:
 Continue with Phyloseq
 Work on Thesis Stage 2 tasks
 
-Tuesday July 25th, 2023
+Tuesday, July 25th, 2023
 
 Did:
 Created abundance plots
@@ -161,4 +161,16 @@ Got stuck with ordination not working (insufficient variability between samples?
 Do:
 Figure out NMDS ordination issues
 
+Wednesday, July 26th, 2023
+
+Did:
+Removed outlier that was messing with NMDS
+Created rough ordination plots
+
+Do:
+Polish alpha and beta diversity plots
+Get feedback on plots
+Begin drafting presentation
+Begin drafting resume
+Work on Thesis Stage 2 tasks
 

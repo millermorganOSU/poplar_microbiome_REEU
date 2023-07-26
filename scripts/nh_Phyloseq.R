@@ -25,13 +25,13 @@ wood.meta <- read.csv("data/wood_meta2.csv", row.names = 1)
 
 ##### Trimming data and working with Phyloseq #####
 
-# Separate out fungi
+# Separate out fungi from taxa table
 fungal.taxa <- as.matrix(taxa.V2[taxa.V2[,1]=="k__Fungi",])
+# 470 fungal ASVs
 dim(fungal.taxa)
 
-# 520 samples with 613 ASVs as columns
+# 520 samples with 613 ASVs
 dim(seqtab.nochim)
-class(seqtab.nochim)
 
 # List ASVs
 all.ASVs <- as.list(colnames(seqtab.nochim))
@@ -45,20 +45,17 @@ dim(seqtab.nochim.fungal)
 test.names.ASVs <- as.list(colnames(seqtab.nochim.fungal))
 identical(test.names.ASVs, fungal.ASVs) # Worked!
 
-# 520 samples with 470 fungal ASVs as columns
+# 520 samples with 470 FUNGAL ASVs
 dim(seqtab.nochim.fungal)
-class(seqtab.nochim.fungal)
 
 # List samples with metadata
 sample.names.wmeta <- as.list(rownames(wood.meta))
 
 # Subset rows (ONLY SAMPLES WITH METADATA)
 seqtab.nochim.fungal.wmeta <- seqtab.nochim.fungal[unlist(sample.names.wmeta),]
-dim(seqtab.nochim.fungal.wmeta)
 
 # 236 samples with 470 fungal ASVs as columns
 dim(seqtab.nochim.fungal.wmeta)
-class(seqtab.nochim.fungal.wmeta)
 
 # Test
 test.names.samples <- as.list(rownames(seqtab.nochim.fungal.wmeta))
@@ -83,11 +80,45 @@ dim(clean.seq.tab)
 clean.seq.tab <- clean.seq.tab[unlist(non.zero.row.keep),]
 dim(clean.seq.tab)
 
+# Row 104 could be messing with NMDS
+hist(clean.seq.tab[104,])
+sum(clean.seq.tab[104,])
+
+# Remove it
+clean.seq.tab <- clean.seq.tab[-104,]
+dim(clean.seq.tab)
+
+# # test
+# test <- rownames(clean.seq.tab)
+# which(test == "myco.04.05.f") #83
+# which(test == "myco.04.05.g") #84
+# hist(clean.seq.tab[83,])
+# sum(clean.seq.tab[83,])
+# hist(clean.seq.tab[84,])
+# sum(clean.seq.tab[84,])
+# clean.seq.tab <- clean.seq.tab[-(83:84),]
+# dim(clean.seq.tab)
+
+# Any other low sum rows?
+rowsum <- as.matrix(rowSums(clean.seq.tab))
+hist(rowsum)
+lowsumR <- as.matrix(tail(sort(rowSums(clean.seq.tab)), n = 20))
+hist(lowsumR)
+
+# Any other low sum cols?
+colsum <- as.matrix(colSums(clean.seq.tab))
+hist(colsum)
+lowsumC <- as.matrix(tail(sort(colSums(clean.seq.tab)), n = 20))
+hist(lowsumC)
+
+# Looks ok to me - no unreasonable outliers
+
 # Now the seq tab has
 # - only fungal ASVs
 # - only samples that have metdata
 # - only samples and ASVs with abundance > 0
-# 235 samples by 359 ASVs
+# - removed potential outlier row 104
+# 234 samples by 359 ASVs
 
 # 236 samples with 10 metadata columns
 dim(wood.meta)
@@ -95,10 +126,15 @@ class(wood.meta)
 
 # Remove sample with no fungal ASVs
 wood.meta.clean <- wood.meta[-38,]
+# Remove sample with virtually no fungal ASVs
+wood.meta.clean <- wood.meta.clean[-104,]
+dim(wood.meta.clean)
+
+# # test
+#wood.meta.clean <- wood.meta.clean[-(83:84),]
 
 # 470 ASVs with taxa (and index and accession)
 dim(fungal.taxa)
-class(fungal.taxa)
 
 # Keep only ASVs that have abundance in seq table
 non.zero.ASVs <- as.list(colnames(clean.seq.tab))
@@ -198,6 +234,7 @@ ASV.per.sample.clean <- plot_bar(ps.clean, fill = "Abundance") +
   xlab("Sample") +
   ylab("ASV Abundance")
 ASV.per.sample.clean
+ggsave("outputs/phyloseq_figures/ASV_Abundance_per_Sample.png", width = 9, height = 6)
 
 # Plot ASV abundance per sample (sorted)
 
@@ -210,22 +247,105 @@ ASV.per.sample.sorted.clean <- plot_bar(ps.clean, fill = "Abundance") +
   xlab("Sample") +
   ylab("ASV Abundance")
 ASV.per.sample.sorted.clean
+ggsave("outputs/phyloseq_figures/ASV_Abundance_per_Sample_sorted.png", width = 9, height = 6)
 
 # Plot ordination NMDS
 ps.ord.nmds <- ordinate(ps.clean, "NMDS", "bray")
-ASV.ordination.nmds <- plot_ordination(ps.clean, ps.ord.nmds, type="taxa", color="Phylum", title="taxa")
+ASV.ordination.nmds <- plot_ordination(ps.clean, ps.ord.nmds, type="taxa", color="Phylum", title="ASV Ordination (NMDS)") +
+  scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
 ASV.ordination.nmds
+ggsave("outputs/phyloseq_figures/ASV_ord_NMDS_by_phy.png", width = 8, height = 6)
+
+# Plot ordination NMDS (by Disease)
+ps.ord.nmds <- ordinate(ps.clean, "NMDS", "bray")
+ASV.ordination.nmds.dis <- plot_ordination(ps.clean, ps.ord.nmds, type="sample", color="Disease", title="ASV Ordination (NMDS)") # +scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
+ASV.ordination.nmds.dis
+ggsave("outputs/phyloseq_figures/ASV_ord_NMDS_by_phy_dis.png", width = 8, height = 6)
 
 # Plot PCoA
 ps.ord.pcoa <- ordinate(ps.clean, "PCoA", "bray")
-ASV.ordination.pcoa <- plot_ordination(ps.clean, ps.ord.pcoa, type="taxa", color="Phylum", title="taxa")
+ASV.ordination.pcoa <- plot_ordination(ps.clean, ps.ord.pcoa, type="taxa", color="Phylum", title="ASV Ordination (PCoA)") +
+  scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
 ASV.ordination.pcoa
+ggsave("outputs/phyloseq_figures/ASV_ord_PCoA_by_phy.png", width = 8, height = 6)
 
-#### ordination not working with phyloseq, trying with vegan #####
+# Plot PCA ASV + Phylum
+ps.ord.pca.tax <- ordinate(ps.clean, "RDA", "bray")
+ASV.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca.tax, type="taxa", color="Phylum", title="ASV Ordination (PCA)") +
+  scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
+ASV.ordination.pca
+ggsave("outputs/phyloseq_figures/ASV_ord_PCA_by_phy.png", width = 8, height = 6)
 
-ntaxa(ps.clean)
-MDS <- metaMDS(clean.seq.tab, distance = "bray", weakties = FALSE)
-MDS
-stressplot(MDS)
-dist_bc <- distance(ps.clean, method = "bray")
-stressplot(dist_bc)
+Total_rep_per_ASV <- as.matrix(colSums(clean.seq.tab))
+hist(Total_rep_per_ASV, 100)
+
+# sample_data(ps.clean)['sample_id'] <- row.names(sample_data(ps.clean))
+# Plot PCA sample + Disease
+ps.ord.pca.sam <- ordinate(ps.clean, "RDA", "bray")
+SAM.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca.sam, type="samples", color="Disease", title="Sample Ordination (PCA)", label = "sample_id") # + theme(legend.position = "none")
+SAM.ordination.pca
+ggsave("outputs/phyloseq_figures/SAMPLE_ord_PCA_by_phy.png", width = 8, height = 6)
+
+#### Investigating NMDS ordination to see if we actually have low variability
+#### Turns out it was just an outlier, a sample with virtually no ASVs
+
+### using phyloseq's distance() -> vegan metaMDS
+dist_1 <- as.matrix(distance(ps.clean, method = "bray"))
+NMDS1 <- metaMDS(dist_1, k = 2, trymax = 100, trace = F)
+stressplot(NMDS1)
+jpeg(filename="outputs/phyloseq_figures/Stress_plot_phyloseq.png", width = 7, height = 4, units = 'in', res = 300)
+stressplot(NMDS1)
+dev.off()
+
+dist_1[1:5,1:5]
+plot(NMDS1, type = "t")
+hist(dist_1)
+
+### using vegan
+dist_2 <-as.matrix(vegdist(clean.seq.tab, method = "bray"))
+NMDS2 <- metaMDS(dist_2, k = 2, trymax = 100, trace = F)
+stressplot(NMDS2)
+jpeg(filename="outputs/phyloseq_figures/Stress_plot_vegan.png", width = 7, height = 4, units = 'in', res = 300)
+stressplot(NMDS2)
+dev.off()
+
+dist_2[1:5,1:5]
+plot(NMDS2, type = "t")
+hist(dist_2)
+
+### is number of dimensions an issue? Even with one dimension, stress = zero
+### after removal of outlier, stress plot behaving as expected although a little high
+NMDS.scree <- function(x) { #where x is the name of the data frame variable
+  plot(rep(1, 10), replicate(10, metaMDS(x, autotransform = F, k = 1)$stress), xlim = c(1, 10),ylim = c(0, 0.30), xlab = "# of Dimensions", ylab = "Stress", main = "NMDS stress plot")
+  for (i in 1:10) {
+    points(rep(i + 1,10),replicate(10, metaMDS(x, autotransform = F, k = i + 1)$stress))
+  }
+}
+#NMDS.scree(dist_1)
+#NMDS.scree(dist_2)
+
+# RDA still clumped?
+rda1 <- rda(otu_table(ps.clean))
+rda2 <- rda(clean.seq.tab)
+rda
+plot(rda1, display = "sites")
+plot(rda2)
+text(rda1, labels=rownames(otu_table(ps.clean)))
+text(rda1, labels=rownames(tax_table(ps.clean)), cex = .1)
+
+# Alpha diversity
+
+plot_richness(ps.clean, x="Disease", measures=c("Shannon", "Simpson", "InvSimpson"), color="Disease") + theme(legend.position = "none")
+
+ps.prop <- transform_sample_counts(ps.clean, function(otu) otu/sum(otu))
+ord.nmds.bray <- ordinate(ps.prop, method="NMDS", distance="bray")
+
+plot_ordination(ps.prop, ord.nmds.bray, color="Disease", title="Bray NMDS")
+
+plot_bar(ps.clean, "Phylum", fill = "Family") + 
+  facet_wrap(~Disease, scales="free_x") + theme(legend.position = "none")
+
+relative <- transform_sample_counts(ps.clean, function(x) x / sum(x) )
+
+plot_bar(relative, "Phylum", fill = "Family") + 
+  facet_wrap(~Disease, scales="free_x") + theme(legend.position = "none")
