@@ -2,13 +2,15 @@
 
 # Import packages
 library(phyloseq); packageVersion("phyloseq")
+library(microbiome); packageVersion("microbiome")
 library(ggplot2); packageVersion("ggplot2")
 library(readxl); packageVersion("readxl")
 library(reshape2); packageVersion("reshape2")
 library(seqinr); packageVersion("seqinr")
-library(tidyverse)
-library(glue)
-library(vegan)
+library(microViz); packageVersion("microViz")
+library(tidyverse); packageVersion("tidyverse")
+library(glue); packageVersion("glue")
+library(vegan); packageVersion("vegan")
 
 # Set WD for or local machine
 setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
@@ -226,19 +228,19 @@ ps.clean <- phyloseq(otu_table(clean.seq.tab, taxa_are_rows=FALSE), sample_data(
 
 # Plot ASV abundance per sample
 
-ASV.per.sample.clean <- plot_bar(ps.clean, fill = "Abundance") +
+ASV.per.sample <- plot_bar(ps.clean, fill = "Abundance") +
   scale_x_discrete(labels=seq(1,236)) +
   theme(axis.text.x = element_blank()) +
   scale_fill_gradient(low="lightgoldenrodyellow", high="red", name = "Individual ASV \n Abundance") +
   labs(title = "ASV Abundance per Sample") +
   xlab("Sample") +
   ylab("ASV Abundance")
-ASV.per.sample.clean
-ggsave("outputs/phyloseq_figures/ASV_Abundance_per_Sample.png", width = 9, height = 6)
+ASV.per.sample
+ggsave("outputs/phyloseq_figures/ASV_abundance_per_sample_unsorted.png", width = 9, height = 6)
 
 # Plot ASV abundance per sample (sorted)
 
-ASV.per.sample.sorted.clean <- plot_bar(ps.clean, fill = "Abundance") +
+ASV.per.sample.sorted <- plot_bar(ps.clean, fill = "Abundance") +
   aes(reorder(Sample, -Abundance)) +
   scale_x_discrete(labels=seq(1,236)) +
   theme(axis.text.x = element_blank()) +
@@ -246,51 +248,147 @@ ASV.per.sample.sorted.clean <- plot_bar(ps.clean, fill = "Abundance") +
   labs(title = "ASV Abundance per Sample") +
   xlab("Sample") +
   ylab("ASV Abundance")
-ASV.per.sample.sorted.clean
-ggsave("outputs/phyloseq_figures/ASV_Abundance_per_Sample_sorted.png", width = 9, height = 6)
+ASV.per.sample.sorted
+ggsave("outputs/phyloseq_figures/ASV_abundance_per_sample_sorted.png", width = 9, height = 6)
+
+# Plot ASV abundance per sample (sorted) (fill = phylum)
+
+ASV.per.sample.sorted.phy <- plot_bar(ps.clean, fill = "Phylum") +
+  aes(reorder(Sample, -Abundance)) +
+  scale_x_discrete(labels=seq(1,236)) +
+  theme(axis.text.x = element_blank()) +
+  labs(title = "ASV Abundance per Sample") +
+  scale_fill_discrete(labels = c("Ascomycota", "Basidiomycota","Chytridiomycota","Fungi Incertae sedis")) +
+  xlab("Sample") +
+  ylab("ASV Abundance")
+ASV.per.sample.sorted.phy
+ggsave("outputs/phyloseq_figures/ASV_abundance_per_sample_sorted_phylum_fill.png", width = 9, height = 6)
+
+# Plot ASV abundance per sample (unsorted) (fill = phylum)
+
+ASV.per.sample.unsorted.phy <- plot_bar(ps.clean, fill = "Phylum") +
+  scale_x_discrete(labels=seq(1,236)) +
+  theme(axis.text.x = element_blank()) +
+  labs(title = "ASV Abundance per Sample") +
+  scale_fill_discrete(labels = c("Ascomycota", "Basidiomycota","Chytridiomycota", "Fungi Incertae sedis")) +
+  xlab("Sample") +
+  ylab("ASV Abundance")
+ASV.per.sample.unsorted.phy
+ggsave("outputs/phyloseq_figures/ASV_abundance_per_sample_unsorted_phylum_fill.png", width = 9, height = 6)
+
+# Plot ASV abundance by Phylum
+
+ASV.per.phy <- plot_bar(ps.clean, x = "Phylum", fill = "Phylum") +
+aes(reorder(Phylum, -Abundance)) +
+geom_bar(aes(color= Phylum , fill= Phylum), stat="identity", position="stack") + theme(legend.position = "none") +
+scale_x_discrete(labels = c("Ascomycota", "Basidiomycota", "Fungi Incertae sedis","Chytridiomycota")) +
+scale_fill_discrete(labels = c("Ascomycota", "Basidiomycota","Chytridiomycota", "Fungi Incertae sedis")) +
+labs(title = "Total ASV Abundance by Phylum") +
+theme(axis.text.x = element_text(angle = 0, hjust= .5)) +
+xlab("Phylum") +
+ylab("Total ASV Abundance")
+ASV.per.phy
+ggsave("outputs/phyloseq_figures/ASV_abundance_total_phylum_fill.png", width = 9, height = 6)
+
+# Plot ASV abundance by Class
+x_labs <- ggplot_build(ASV.per.cls)$layout$panel_params[[1]]$x$get_labels()
+x_labs.2 <- sub("c__", "", x_labs)
+x_labs.2 <- sub("c_", "", x_labs.2)
+x_labs.2 <- sub("_cls_Incertae_sedis", " Incertae sedis", x_labs.2)
+print(x_labs)
+print(x_labs.2)
+
+ASV.per.cls <- plot_bar(ps.clean, x = "Class", fill = "Class") +
+  aes(reorder(Class, -Abundance, sum)) +
+  geom_bar(aes(color= Class, fill= Class), stat="identity", position="stack") + theme(legend.position = "none") +
+  scale_x_discrete(labels = x_labs.2) +
+  labs(title = "Total ASV Abundance by Class") +
+  xlab("Class") +
+  ylab("Total ASV Abundance") +
+  theme(axis.text.x = element_text(angle = 45, hjust=1))
+ASV.per.cls
+ggsave("outputs/phyloseq_figures/ASV_abundance_total_class_fill.png", width = 9, height = 6)
+
+# Code below might be used later
+# # Plot ASV abundance by Genus
+# x_labs.3 <- ggplot_build(ASV.per.gen)$layout$panel_params[[1]]$x$get_labels()
+# x_labs.4 <- sub("g__", "", x_labs.3)
+# x_labs.4 <- sub("g_", "", x_labs.4)
+# x_labs.4 <- sub("_gen_Incertae_sedis", " Incertae sedis", x_labs.4)
+# print(x_labs.3)
+# print(x_labs.4)
+# 
+# ASV.per.gen <- plot_bar(ps.clean, x = "Genus", fill = "Genus") +
+#   aes(reorder(Genus, -Abundance, sum)) +
+#   geom_bar(aes(color= Genus, fill= Genus), stat="identity", position="stack") + theme(legend.position = "none") +
+#   scale_x_discrete(labels = x_labs.4) +
+#   labs(title = "Total ASV Abundance by Genus") +
+#   xlab("Genus") +
+#   ylab("Total ASV Abundance") +
+#   theme(axis.text.x = element_text(angle = 45, hjust=1))
+# ASV.per.gen
+# ggsave("outputs/phyloseq_figures/ASV_abundance_total_class_fill.png", width = 9, height = 6)
+# 
+# # Subset out top 20 species
+# top20 <- names(sort(taxa_sums(ps.clean), decreasing=TRUE))[1:20]
+# ps.top20 <- transform_sample_counts(ps.clean, function(OTU) OTU/sum(OTU))
+# ps.top20 <- prune_taxa(top20, ps.top20)
+# 
+# ASV.per.sp <- plot_bar(ps.top20, x = "Species", fill = "Disease") +
+#   geom_bar(aes(color= Disease, fill= Disease), stat="identity", position="stack") +
+#   aes(reorder(Species, -Abundance, sum))
+# ASV.per.sp
+# ggsave("outputs/phyloseq_figures/ASV_Abundance_per_Sample_sorted.png", width = 9, height = 6)
+
 
 # Plot ordination NMDS
 ps.ord.nmds <- ordinate(ps.clean, "NMDS", "bray")
-ASV.ordination.nmds <- plot_ordination(ps.clean, ps.ord.nmds, type="taxa", color="Phylum", title="ASV Ordination (NMDS)") +
+ASV.ordination.nmds.phy <- plot_ordination(ps.clean, ps.ord.nmds, type="taxa", color="Phylum", title="ASV Ordination (NMDS)") +
   scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
-ASV.ordination.nmds
-ggsave("outputs/phyloseq_figures/ASV_ord_NMDS_by_phy.png", width = 8, height = 6)
+ASV.ordination.nmds.phy
+ggsave("outputs/phyloseq_figures/ASV_ord_NMDS_phylum_fill.png", width = 8, height = 6)
 
 # Plot ordination NMDS (by Disease)
 ps.ord.nmds <- ordinate(ps.clean, "NMDS", "bray")
-ASV.ordination.nmds.dis <- plot_ordination(ps.clean, ps.ord.nmds, type="sample", color="Disease", title="ASV Ordination (NMDS)") # +scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
-ASV.ordination.nmds.dis
-ggsave("outputs/phyloseq_figures/ASV_ord_NMDS_by_phy_dis.png", width = 8, height = 6)
+SAM.ordination.nmds.dis <- plot_ordination(ps.clean, ps.ord.nmds, type="sample", color="Disease", title="Sample Ordination (NMDS)") # +scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
+SAM.ordination.nmds.dis
+ggsave("outputs/phyloseq_figures/SAM_ord_NMDS_disease_fill.png", width = 8, height = 6)
 
-# Plot PCoA
+# Plot PCoA by phylum
 ps.ord.pcoa <- ordinate(ps.clean, "PCoA", "bray")
-ASV.ordination.pcoa <- plot_ordination(ps.clean, ps.ord.pcoa, type="taxa", color="Phylum", title="ASV Ordination (PCoA)") +
+ASV.ordination.pcoa.tax <- plot_ordination(ps.clean, ps.ord.pcoa, type="taxa", color="Phylum", title="ASV Ordination (PCoA)") +
   scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
-ASV.ordination.pcoa
-ggsave("outputs/phyloseq_figures/ASV_ord_PCoA_by_phy.png", width = 8, height = 6)
+ASV.ordination.pcoa.tax
+ggsave("outputs/phyloseq_figures/ASV_ord_PCoA_phylum_fill.png", width = 8, height = 6)
+
+# Plot PCoA by disease
+ps.ord.pcoa <- ordinate(ps.clean, "PCoA", "bray")
+ASV.ordination.pcoa.dis <- plot_ordination(ps.clean, ps.ord.pcoa, type="sample", color="Disease", title="ASV Ordination (PCoA)")
+ASV.ordination.pcoa.dis
+ggsave("outputs/phyloseq_figures/ASV_ord_PCoA_disease_fill.png", width = 8, height = 6)
 
 # Plot PCA ASV + Phylum
-ps.ord.pca.tax <- ordinate(ps.clean, "RDA", "bray")
-ASV.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca.tax, type="taxa", color="Phylum", title="ASV Ordination (PCA)") +
-  scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
+ps.ord.pca <- ordinate(ps.clean, "RDA", "bray")
+ASV.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca, type="taxa", color="Phylum", title="ASV Ordination (PCA)") +
+scale_color_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"))
 ASV.ordination.pca
-ggsave("outputs/phyloseq_figures/ASV_ord_PCA_by_phy.png", width = 8, height = 6)
+ggsave("outputs/phyloseq_figures/ASV_ord_PCA_phylum_fill.png", width = 8, height = 6)
 
 Total_rep_per_ASV <- as.matrix(colSums(clean.seq.tab))
 hist(Total_rep_per_ASV, 100)
 
-# sample_data(ps.clean)['sample_id'] <- row.names(sample_data(ps.clean))
+sample_data(ps.clean)['sample_id'] <- row.names(sample_data(ps.clean))
 # Plot PCA sample + Disease
-ps.ord.pca.sam <- ordinate(ps.clean, "RDA", "bray")
-SAM.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca.sam, type="samples", color="Disease", title="Sample Ordination (PCA)", label = "sample_id") # + theme(legend.position = "none")
+ps.ord.pca <- ordinate(ps.clean, "RDA", "bray")
+SAM.ordination.pca <- plot_ordination(ps.clean, ps.ord.pca, type="samples", color="Disease", title="Sample Ordination (PCA)", label = "sample_id") # + theme(legend.position = "none")
 SAM.ordination.pca
-ggsave("outputs/phyloseq_figures/SAMPLE_ord_PCA_by_phy.png", width = 8, height = 6)
+ggsave("outputs/phyloseq_figures/SAMPLE_ord_PCA_disease_fill.png", width = 8, height = 6)
 
 #### Investigating NMDS ordination to see if we actually have low variability
 #### Turns out it was just an outlier, a sample with virtually no ASVs
 
 ### using phyloseq's distance() -> vegan metaMDS
-dist_1 <- as.matrix(distance(ps.clean, method = "bray"))
+dist_1 <- as.matrix(distance(ps.clean, method = "bray", type = "samples"))
 NMDS1 <- metaMDS(dist_1, k = 2, trymax = 100, trace = F)
 stressplot(NMDS1)
 jpeg(filename="outputs/phyloseq_figures/Stress_plot_phyloseq.png", width = 7, height = 4, units = 'in', res = 300)
@@ -333,19 +431,58 @@ plot(rda2)
 text(rda1, labels=rownames(otu_table(ps.clean)))
 text(rda1, labels=rownames(tax_table(ps.clean)), cex = .1)
 
-# Alpha diversity
+# Relative abundance by disease - not amazing
+ps.t <- transform_sample_counts(ps.clean, function(x) x / sum(x) * 100)
+ps.t.p <- aggregate_taxa(ps.t, "Phylum")
+relative <- plot_composition(ps.t.p, group_by = "Disease", average_by = "Disease") +
+scale_fill_hue(labels = c("Ascomycota", "Basidiomycota", "Chytridiomycota", "Fungi Incertae sedis"), name = "Phylum") +
+labs(title = "Relative Phylum Abundance by Averaged by Disease Class") +
+theme(axis.title.x=element_blank(),
+      axis.text.x=element_blank(),
+      axis.ticks.x=element_blank()) +
+ylab("Relative Phylum Abundance")
+relative
+ggsave("outputs/phyloseq_figures/relative_abundance_disease_facet.png", width = 8, height = 6)
 
-plot_richness(ps.clean, x="Disease", measures=c("Shannon", "Simpson", "InvSimpson"), color="Disease") + theme(legend.position = "none")
+Sph <- fungal.taxa.clean[fungal.taxa.clean[,6]=="g__Sphaerulina",]
+print(Sph)
+which(fungal.taxa[,6]=="g__Sphaerulina")
+fungal.taxa[340,6]
+# microViz is cool
 
-ps.prop <- transform_sample_counts(ps.clean, function(otu) otu/sum(otu))
-ord.nmds.bray <- ordinate(ps.prop, method="NMDS", distance="bray")
+#ps.clean%>%
+    
+#phyloseq::merge_samples(group = "Disease") %>%
 
-plot_ordination(ps.prop, ord.nmds.bray, color="Disease", title="Bray NMDS")
+test <-comp_barplot(
+    ps.clean,
+    tax_level = "Family",
+    order_with_all_taxa = TRUE,
+    taxon_renamer = function(x) stringr::str_replace_all(x, "f__", ""),
+    tax_order = prev,
+    facet_by = "Disease",
+    label = "Genotype",
+    n_taxa = 25,
+    merge_other = FALSE,
+    bar_outline_colour = NA) +
+    guides(fill = guide_legend(ncol = 1)) +
+    ggtitle("Relative Endophyte Family Abundance by Host Genotype and Disease Class") +
+    xlab("Host Genotype") +
+    ylab("Relative Abundance (Family)") +
+    theme(axis.text.y=element_text(size=6)) +
+    coord_flip()
+test
+ggsave("outputs/phyloseq_figures/relative_abundance_viz.png", width = 12, height = 9)
 
-plot_bar(ps.clean, "Phylum", fill = "Family") + 
-  facet_wrap(~Disease, scales="free_x") + theme(legend.position = "none")
 
-relative <- transform_sample_counts(ps.clean, function(x) x / sum(x) )
-
-plot_bar(relative, "Phylum", fill = "Family") + 
-  facet_wrap(~Disease, scales="free_x") + theme(legend.position = "none")
+# Aplha Diversity Boxplot
+plot_richness(ps.clean,
+              x="Disease",
+              measures=c("Shannon", "Simpson", "InvSimpson"),
+              color="Disease") +
+  geom_boxplot(alpha=0.6) +
+  xlab("Disease Class") +
+  theme(axis.text.x = element_text(angle = 0, hjust= .5)) +
+  ggtitle("Alpha Diversity by Disease Class") +
+  theme(legend.position = "none") 
+ggsave("outputs/phyloseq_figures/alpha_diversity_boxplot.png", width = 8, height = 6)
