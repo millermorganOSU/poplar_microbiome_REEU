@@ -180,10 +180,68 @@ Did:
 Polished most figures
 Experimented with microViz
 
-Did:
+Do
 Polish microViz
 Compare beta diversity
 Begin drafting presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
+
+Thursday, July 27th, 2023
+
+Did:
+Began drafting presentation
+Got summary stats for raw reads
+Compared beta diversity -> Premanova
+
+
+Do:
+Polish microViz
+Continue presentation
+Read textbook
+Begin drafting resume
+Work on Thesis Stage 2 tasks
+
+Friday, July 28th, 2023
+
+Did:
+Continued presentation drafting
+Studied textbook material
+
+
+Do:
+Polish microViz
+Continue presentation
+Begin drafting resume
+Work on Thesis Stage 2 tasks
+
+Monday, July 30th, 2023
+
+Did:
+Continued presentation drafting
+Polished workflow chart
+Worked on microViz patching
+
+
+Do:
+Polish microViz
+Continue presentation
+Begin drafting resume
+Work on Thesis Stage 2 tasks
+
+Monday, July 30th, 2023
+
+Did:
+Continued presentation drafting
+Polished microViz
+Began preparing defense of research decisions
+Began preparing list of question/uncertainties
+Committed and pushed pptx
+
+
+Do:
+Continue presentation
+Begin drafting resume
+Work on Thesis Stage 2 tasks
+
 
