@@ -1,0 +1,23 @@
+(Alam 2021) Endophytic Fungi- From Symbiosis to Secondary Metabolite Communications or Vice Versa?.pdf
+(Álvarez 2003.) Ribosomal ITS sequences and plant phylogenetic inference.pdf
+(Baldrain 2017) Forest microbiome- diversity, complexity and dynamics.pdf
+(Bellemain 2010) ITS as an environmental DNA barcode for fungi an in silico approach reveals potential PCR biases.pdf
+(Busby 2016) Fungal endophytes modifiers of plant disease.pdf
+(Busby LeBoldus) NSF RAPID Proposal.pdf
+(Callahan 2016) DADA2.pdf
+(Callahan 2017 ) Exact sequence variants should replace operational taxonomic units in marker-gene data analysis.pdf
+(Dove 2022) Relationships between Sphaerulina musiva Infection and the Populus Microbiome and Metabolome.pdf
+(Forster 2019) Improving eDNA-based protist diversity assessments using networks of amplicon sequence variants.pdf
+(Glassman 2018) Broadscale Ecological Patterns Are Robust to Use of Exact Sequence Variants versus Operational Taxonomic Units.pdf
+(Hibbett 2003) ITS Primer Sequences.pdf
+(Hibbett 2017) Sequence-based classification and identification of Fungi.pdf
+(Nilsson 2014) Improving ITS sequence data for identification of plant pathogenic fungi.pdf
+(Peeters 2021) Exploring the Microbiome Analysis and Visualization Landscape.pdf
+(Qin 2014)The Infection Biology of Sphaerulina musiva- Clues to Understanding a Forest Pathogen.pdf
+(Schloss 2021) Amplicon Sequence Variants Artificially Split Bacterial Genomes into Separate Clusters.pdf
+(Schoch 2012) Nuclear ribosomal internal transcribed spacer (ITS) region as a universal DNA barcode marker for Fungi.pdf
+(Sondreli 2020) S. musiva Disease Notes.pdf
+(Tedersoo 2022) Best practices in metabarcoding of fungi- From experimental design to results.pdf
+(Toju 2012) High-Coverage ITS Primers for the DNA-Based Identification of Ascomycetes and Basidiomycetes in Environmental Samples.pdf
+Diseases of trees in the Great Plains.pdf
+lit_list.txt
