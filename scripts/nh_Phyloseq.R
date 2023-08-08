@@ -17,6 +17,12 @@ library(gridExtra); packageVersion("gridExtra")
 library(ggpubr); packageVersion("ggpubr")
 library(forcats); packageVersion("forcats")
 library(RColorBrewer); packageVersion("RColorBrewer")
+install.packages("plotly")
+BiocManager::install("dittoSeq")
+install.packages("viridis")
+install.packages("plotly.microbiome", repos = "https://lvclark.r-universe.dev")
+library(plotly.microbiome)
+
 
 # Set WD for or local machine
 setwd('~/LeBoldus/local_git/poplar_microbiome_REEU')
@@ -759,6 +765,15 @@ richness_ex <- head(richness, 10)
 
 write.csv(richness_ex, "outputs/richness_example.csv")
 
+### wow!!11!!! 3D!!!!
+dist_1 <- distance(ps.clean, method = "bray", type = "samples")
+NMDS1 <- metaMDS(dist_1, k = 3, trymax = 100, trace = F)
+NMDS1
+class(NMDS1)
+beta_diversity_3d(NMDS1, wood.meta.clean, "Disease")
+
+
+view(wood.meta)
 # ### Add total occurrence
 # # The code below was a test that wasn't very useful
 # 
@@ -890,9 +905,9 @@ write.csv(richness_ex, "outputs/richness_example.csv")
 #### Turns out it was just an outlier, a sample with virtually no ASVs
 
 # ### using phyloseq's distance() -> vegan metaMDS
-#dist_1 <- as.matrix(distance(ps.clean, method = "bray", type = "samples"))
-#NMDS1 <- metaMDS(dist_1, k = 2, trymax = 100, trace = F)
-#NMDS1
+# dist_1 <- distance(ps.clean, method = "bray", type = "samples")
+# NMDS1 <- metaMDS(dist_1, k = 3, trymax = 100, trace = F)
+# NMDS1
 #stressplot(NMDS1, main = "NMDS Sample Ordination Stress Plot")
 #mtext(stp, "Final Stress: 0.205")
 #NMDS1$stress
@@ -935,4 +950,5 @@ write.csv(richness_ex, "outputs/richness_example.csv")
 # plot(rda2)
 # text(rda2, labels=colSums(clean.seq.tab))
 # text(rda1, labels=(tax_table(ps.clean))[,7], cex = 1)
-
+ 
+citation("vegan")
