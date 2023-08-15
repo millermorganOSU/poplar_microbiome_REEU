@@ -659,6 +659,7 @@ ggsave("outputs/phyloseq_figures/relative_abundance_sp_VIZ.png", width = 13.333,
 # Alpha Diversity Boxplot
 
 my.comparison <- list( c("Canker", "Healthy"))
+all.comparison <- list( c("Canker", "Healthy"), c("Non-canker", "Healthy"), c("Canker", "Non-canker"))
 symnum.args = list(cutpoints = c(0, 0.0001, 0.001, 0.01, 0.05, 1), symbols = c("****", "***", "**", "*", "ns"))
 
 
@@ -676,7 +677,21 @@ Alpha.plot <- plot_richness(ps.clean,
   stat_compare_means(method = "wilcox.test", comparisons = my.comparison, label = "p.signif", symnum.args = symnum.args)
 ggsave("outputs/phyloseq_figures/alpha_diversity_boxplot_observed.png", units = "in", width = 13.333, height = 7.5)
 
+Alpha.plot <- plot_richness(ps.clean,
+                            x="Disease",
+                            measures=c("Shannon", "Simpson", "InvSimpson", "Observed"),
+                            color="Disease") +
+  geom_boxplot(alpha=0.6) +
+  xlab("\nDisease Class") +
+  ylab("Alpha Diversity Measure\n") +
+  theme(axis.text.x = element_text(angle = 0, hjust= .5)) +
+  ggtitle("Alpha Diversity by Disease Class") +
+  theme(legend.position = "none") +
+  labs(caption = "Unpaired Wilcoxon Test (p-values <= 0.001)") +
+  stat_compare_means(method = "wilcox.test", comparisons = all.comparison, label = "p.signif", symnum.args = symnum.args)
+ggsave("outputs/phyloseq_figures/alpha_diversity_boxplot_observed.png", units = "in", width = 13.333, height = 7.5)
 
+Alpha.plot
 # Beta diversity
 
 # Permanova test using the vegan package
@@ -774,6 +789,7 @@ beta_diversity_3d(NMDS1, wood.meta.clean, "Disease")
 
 
 view(wood.meta)
+
 # ### Add total occurrence
 # # The code below was a test that wasn't very useful
 # 

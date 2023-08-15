@@ -1,4 +1,4 @@
-Monday July 10th, 2023
+---Monday July 10th, 2023
 
 Did:
 Polished both Q20 and Q28 scripts
@@ -15,7 +15,7 @@ Download unite database
 Assign taxonomy to ASVs
 ITS4 direction - possibly check using R script
 
-Tuesday July 11th, 2023
+---Tuesday July 11th, 2023
 
 Did:
 Got stuck on the computation for taxonomy assignment (10+ hours)
@@ -24,7 +24,7 @@ Do:
 Create clean R workspace to speed up taxonomy assignment
 Commit and push without raw data
 
-Wednesday July 12th, 2023
+---Wednesday July 12th, 2023
 
 Did:
 Committed and pushed but raw data remains on gitHub
@@ -38,7 +38,7 @@ Organize and review literature
 Revise scripts to show correct primer orientation
 create Q20 tax environment
 
-Thursday, July 13th, 2023
+---Thursday, July 13th, 2023
 
 Did:
 Manually cleaned out repository
@@ -55,7 +55,7 @@ Ask about primer choice
 Ask how to load matrix remotely
 CLEAN GIT BY TEMP REMOVING SENSITIVE FILES AND FORCE PUSHING
 
-Friday, July 14th, 2023
+---Friday, July 14th, 2023
 
 Did:
 Cleaned git by removing sensitive/unwanted files from 'cached'
@@ -66,7 +66,7 @@ Continued development of README report
 Do:
 Work on Thesis Stage 2 tasks
 
-Monday, July 17th, 2023
+---Monday, July 17th, 2023
 
 Did:
 Explored representing data with Phyloseq
@@ -77,7 +77,7 @@ Work on Thesis Stage 2 tasks
 Prepare for Pod meeting Wed 2-4
 Create bash script for genome reference
 
-Tuesday, July 18th, 2023
+---Tuesday, July 18th, 2023
 
 Did:
 Created bash scripts for genome reference
@@ -93,7 +93,7 @@ Work on Thesis Stage 2 tasks
 Prepare for Pod meeting Wed 2-4
 Work on README (pictures not appearing)
 
-Wednesday, July 19th, 2023
+---Wednesday, July 19th, 2023
 
 Did:
 Reassign taxonomy with ssh
@@ -106,7 +106,7 @@ Figure out how to align/group nophy.ASVs
 Work on Thesis Stage 2 tasks
 Clean up scripts
 
-Thursday, July 20th, 2023
+---Thursday, July 20th, 2023
 
 Did:
 Separated out likely poplar ASVs with sorted crustal-omega output
@@ -118,7 +118,7 @@ Clean up clutter and commit and push
 Subset and blast taxa that remain unassigned
 Work on Thesis Stage 2 tasks
 
-Friday, July 21st, 2023
+---Friday, July 21st, 2023
 
 Did:
 Installed Blast+ with brew
@@ -129,7 +129,7 @@ Clean and fill taxa table
 Work on Thesis Stage 2 tasks
 Commit and push
 
-Sunday, July 23rd, 2023
+---Sunday, July 23rd, 2023
 
 Did:
 Cleaned and filled taxa table (all assigned)
@@ -138,8 +138,7 @@ Committed and pushed
 Do:
 Work on Thesis Stage 2 tasks
 
-
-Monday, July 24rd, 2023
+---Monday, July 24rd, 2023
 
 (Ricardo is a father. Hooray!)
 
@@ -152,7 +151,7 @@ Do:
 Continue with Phyloseq
 Work on Thesis Stage 2 tasks
 
-Tuesday, July 25th, 2023
+---Tuesday, July 25th, 2023
 
 Did:
 Created abundance plots
@@ -161,7 +160,7 @@ Got stuck with ordination not working (insufficient variability between samples?
 Do:
 Figure out NMDS ordination issues
 
-Wednesday, July 26th, 2023
+---Wednesday, July 26th, 2023
 
 Did:
 Removed outlier that was messing with NMDS
@@ -174,7 +173,7 @@ Begin drafting presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Thursday, July 27th, 2023
+---Thursday, July 27th, 2023
 
 Did:
 Polished most figures
@@ -187,7 +186,7 @@ Begin drafting presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Thursday, July 27th, 2023
+---Thursday, July 27th, 2023
 
 Did:
 Began drafting presentation
@@ -202,7 +201,7 @@ Read textbook
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Friday, July 28th, 2023
+---Friday, July 28th, 2023
 
 Did:
 Continued presentation drafting
@@ -215,7 +214,7 @@ Continue presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Monday, July 30th, 2023
+---Monday, July 30th, 2023
 
 Did:
 Continued presentation drafting
@@ -229,7 +228,7 @@ Continue presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Tuesday, July 31th, 2023
+---Tuesday, July 31th, 2023
 
 Did:
 Continued presentation drafting
@@ -244,7 +243,7 @@ Continue presentation
 Begin drafting resume
 Work on Thesis Stage 2 tasks
 
-Wednesday, August 2nd, 2023
+---Wednesday, August 2nd, 2023
 
 Did:
 Continued presentation drafting
@@ -256,7 +255,7 @@ Do:
 Goal - have background slides polished by the end of Thursday
 Work on Thesis Stage 2 tasks
 
-Thursday, August 3rd, 2023
+---Thursday, August 3rd, 2023
 
 Did:
 Goal complete!
@@ -267,7 +266,7 @@ Committed and pushed pptx
 Do:
 Goal - Have everything except maybe references done by the end of Friday
 
-Friday, August 4th, 2023
+---Friday, August 4th, 2023
 
 Did:
 Goal complete!
@@ -278,7 +277,7 @@ Committed and pushed pptx
 Do:
 Goal - Polish presentation for review on Monday, prepare to discuss HC thesis
 
-Saturday, August 5th, 2023
+---Saturday, August 5th, 2023
 
 Did:
 Organized literature and created references
@@ -287,7 +286,7 @@ Organized literature and created references
 Do:
 Goal - Polish presentation for review on Monday, prepare to discuss HC thesis
 
-Monday, August 7th, 2023
+---Monday, August 7th, 2023
 
 Meet with Jared
 Rehearse presentation
@@ -297,7 +296,7 @@ cleared up sampling procedure
 future analysis -  meeting with lady who constructed library + Jared + maybe Busby
 HC thesis - Jared is in, Complete stage 2 then find a time to meet and form comitte, Work during the school year, for credit???
 
-Tuesday, August 8th, 2023
+---Tuesday, August 8th, 2023
 
 Did:
 Touched up pptx
@@ -308,6 +307,43 @@ Experimented with 3d ORD to reduce final stress
 Do:
 Submit pptx by noon on Wednesday
 Rehearse presentation
+
+---Wednesday and Thursday were crunch time for the presentation
+ 
+presentation went well, biggest mistake was over-preparing/including too much content, much of what I included was probably unnecessary
+
+I got one question about DADA2 using an ITS 'structure' to learn error rates. This was confusing because it I never gave the program a structure or template. My understanding was that is just used the other sequences and reported Illumina quality to learn error. "DADA2 is reference free and applicable to any genetic locus". I will need to ask more about this.
+
+I also got a question about how to deal with discrepancy in 'library size' or total number of reads in each sample. This is still confusing to me. Clearly, HTS data must be considered as compositional and that 'microbial load' (or the actual number of organisms/molecules in a sample) can not be inferred from HTS data. Jared recommend we use quantitative PCR or qPCR to better understand how S. musiva load might be impacting community composition. I am still unsure how this data will be combined with the current analysis.
+
+Current to do:
+
+OSU Credit items to complete:
+Complete Resume -> Erin
+Complete Self Evaluation -> Erin + Jeff (writing sample)
+Nag Ricardo about Supervisor Evaluation -> Erin
+
+HC Thesis and Jared meeting:
+Discuss expectations for this analysis
+Contact advisors about the specifics of research credits
+Discuss expectations for work performed (logging hours? research credits?)
+
+
+Pipeline:
+(low priority) Rethink host sequence removal
+Clean up pipeline and git
+Incorporate genotype resistance into analysis - compare what we would expect disease phenotype to be based on genotype resistance and see how FEs might be altering this
+Run qPCR to better understand how S. musiva load might be affecting community composition
+
+
+
+---Tuesday, August 15th, 2023
+
+Back in the lab
+Getting ducks in a row for Jared meeting
+Working on resume and self evaluation for OSU credit
+
+
 
 
 
